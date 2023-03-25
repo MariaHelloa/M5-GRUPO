@@ -5,10 +5,10 @@ const clientesModel = {
     return {
       id: obj.id,
       nome: obj.nome,
-      email: obj.email
+      email: obj.email,
     };
   },
-  };
+};
   
   
 export default clientesModel;

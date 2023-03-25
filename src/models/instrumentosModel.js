@@ -7,7 +7,7 @@ const acessoriosModel = {
       nome: obj.nome,
       tipo: obj.tipo,
       descricao: obj.descricao,
-      preco: obj.preco,
+      preco: obj.preco
     };
   },
   };

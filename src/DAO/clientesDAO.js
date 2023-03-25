@@ -9,7 +9,7 @@ class ClientesDAO {
     };
   }
   static async mostrarUm(param) {
-    const dadosbd = await database.query(`SELECT * FROM clientes WHERE id = ?`, param);
+    const dadosbd = await database.query(`SELECT * FROM clientes WHERE email = ?`, param);
     return {
       dados: { msg: dadosbd },
       status: 200,

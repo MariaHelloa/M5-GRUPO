@@ -11,7 +11,7 @@ const clientesController = (app) => {
     res.status(resposta.status).send(resposta.dados);
   });
   app.post("/clientes", async (req, res) => {
-    const modelado = clientes.modelar(req.body)
+    const modelado = clientesModel.modelar(req.body)
     const resposta = await clientesDAO.inserir(modelado)
     res.status(resposta.status).send(resposta.dados);
   });

@@ -7,7 +7,7 @@ const lojaModel = {
       nome: obj.nome,
       cnpj: obj.cnpj,
       funcionarios: obj.funcionarios,
-      distribuidoras: obj.distribuidoras,
+      distribuidoras: obj.distribuidoras
     };
   },
   };
