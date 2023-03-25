@@ -6,6 +6,9 @@ const clientesModel = {
       id: obj.id,
       nome: obj.nome,
       email: obj.email,
+      senha:obj.senha,
+      celular:obj.celular,
+
     };
   },
 };
