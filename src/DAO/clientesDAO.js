@@ -29,6 +29,27 @@ class ClientesDAO {
       status: 201,
     };
   }
+  static async atualizar(email, obj) {
+    try {
+      await database.query("UPDATE clientes SET idclientes = ?, nome = ?, email = ?, senha = ?, celular = ? WHERE email = ?", [
+        obj.idclientes,
+        obj.nome,
+        obj.email,
+        obj.senha,
+        obj.celular,
+        email,
+      ]);
+    } catch (error) {
+      return {
+        dados: { msg: "MySql error", error: error.code },
+        status: 500,
+      };
+    }
+    return {
+      dados: { msg: "Cliente atualizado com sucesso na tabela Clientes" },
+      status: 200,
+    };
+  }
 }
 
 export default ClientesDAO;
