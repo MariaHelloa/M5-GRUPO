@@ -15,6 +15,15 @@ const clientesController = (app) => {
     const resposta = await clientesDAO.inserir(modelado)
     res.status(resposta.status).send(resposta.dados);
   });
+
+  app.delete("/clientes/email/:email", async(req, res) => {
+    const resposta = clientesDAO.deletar(req.params.email)
+    res.status(resposta.status).send(resposta.dados)
+  });
+  app.put("/clientes/email/:email", async(req, res) => {
+    const resposta = await clientesDAO.atualizar(req.params.email)
+    res.status(resposta.status).send(resposta.dados)
+  });
 };
  // app.delete("/usuarios/email/:email", (req, res) => {
   //   const resposta = usuariosModel.deletar(req.params.email)
@@ -22,3 +31,4 @@ const clientesController = (app) => {
   //});
 
 export default clientesController;
+
