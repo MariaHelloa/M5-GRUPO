@@ -4,16 +4,24 @@ import instrumentosDAO from "../DAO/instrumentosDAO.js";
 
     const instrumentosController = (app) => {
     app.get("/instrumentos", async (req, res) => {
-      const resposta = await clientesDAO.mostrarTodos();
+      const resposta = await instrumentosDAO.mostrarTodos();
       res.status(resposta.status).send(resposta.dados);
     });
-    app.get("/instrumentos/email/:email", async (req, res) => {
-      const resposta = await clientesDAO.mostrarUm(req.params.email);
+    app.get("/instrumentos/id/:id", async (req, res) => {
+      const resposta = await instrumentosDAO.mostrarUm(req.params.email);
       res.status(resposta.status).send(resposta.dados);
     });
     app.post("/instrumentos", async (req, res) => {
-      const modelado = clientes.modelar(req.body)
-      const resposta = await clientesDAO.inserir(modelado)
+      const modelado = instrumentosModel.modelar(req.body)
+      const resposta = await instrumentosDAO.inserir(modelado)
+      res.status(resposta.status).send(resposta.dados);
+    });
+    app.delete("/instrumentos/id/:id", async(req, res) => {
+      const resposta = await instrumentosDAO.deletar(req.params.email,req.body)
+      res.status(resposta.status).send(resposta.dados)
+    });
+    app.put("/instrumentos/id/:id", async (req, res) => {
+      const resposta = await instrumentosDAO.atualizar(req.params.email, req.body);
       res.status(resposta.status).send(resposta.dados);
     });
   };
