@@ -29,6 +29,51 @@ class InstrumentosDAO {
       status: 201,
     };
   }
+  static async atualizar(id, obj) {
+    try {
+      if (!obj) {
+        return {
+          dados: { msg: "Objeto de atualização não fornecido" },
+          status: 400,
+        };
+      }     
+      await database.query("UPDATE instrumentos SET nome = ?, tipo = ?, descricao = ?, preco = ? WHERE id = ?", [
+        obj.nome,
+        obj.tipo,
+        obj.descricao,
+        obj.preco,
+        id,
+      ]);
+    } catch (error) {
+      console.log(error);
+      return {
+        dados: { msg: "Erro ao atualizar o instrumento", error: error.message },
+        status: 500,
+      };
+    }
+    
+    return {
+      dados: { msg: "Instrumentos atualizado com sucesso na tabela instrumentos" },
+      status: 200,
+    };
+  }
+
+  static async deletar(id) {
+    try {
+      await database.query("DELETE FROM clientes WHERE id = ?", [id]);
+    } catch (error) {
+      console.log(error);
+      return {
+        dados: { msg: "MySql error", error: error.code },
+        status: 500,
+      };
+    }
+    return {
+      dados: { msg: "Instrumentos deletado com sucesso da tabela Instrumentos" },
+      status: 200,
+    };
+  }
+  
 }
 
 export default InstrumentosDAO;
