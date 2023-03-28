@@ -4,16 +4,25 @@ import lojaDAO from "../DAO/lojaDAO.js";
 
     const lojaController = (app) => {
     app.get("/loja", async (req, res) => {
-      const resposta = await clientesDAO.mostrarTodos();
+      const resposta = await lojaDAO.mostrarTodos();
       res.status(resposta.status).send(resposta.dados);
     });
-    app.get("/loja/email/:email", async (req, res) => {
-      const resposta = await clientesDAO.mostrarUm(req.params.email);
+    app.get("/loja/id/:id", async (req, res) => {
+      const resposta = await lojaDAO.mostrarUm(req.params.id);
       res.status(resposta.status).send(resposta.dados);
     });
     app.post("/loja", async (req, res) => {
-      const modelado = clientes.modelar(req.body)
-      const resposta = await clientesDAO.inserir(modelado)
+      const modelado = lojaModel.modelar(req.body)
+      const resposta = await lojaDAO.inserir(modelado)
+      res.status(resposta.status).send(resposta.dados);
+    });
+
+    app.delete("/loja/id/:id", async(req, res) => {
+      const resposta = await lojaDAO.deletar(req.params.id,req.body)
+      res.status(resposta.status).send(resposta.dados)
+    });
+    app.put("/loja/id/:id", async (req, res) => {
+      const resposta = await lojaDAO.atualizar(req.params.id, req.body);
       res.status(resposta.status).send(resposta.dados);
     });
   };
