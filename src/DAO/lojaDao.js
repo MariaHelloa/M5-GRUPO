@@ -29,6 +29,50 @@ class lojaDAO {
       status: 201,
     };
   }
+  static async atualizar(id, obj) {
+    try {
+      if (!obj) {
+        return {
+          dados: { msg: "Objeto de atualização não fornecido" },
+          status: 400,
+        };
+      }     
+      await database.query("UPDATE loja SET nome = ?, cnpj = ?, funcionarios = ?, distribuidores = ? WHERE id = ?", [
+        obj.nome,
+        obj.cnpj,
+        obj.funcionarios,
+        obj.distribuidores,
+        id,
+      ]);
+    } catch (error) {
+      console.log(error);
+      return {
+        dados: { msg: "Erro ao atualizar a loja", error: error.message },
+        status: 500,
+      };
+    }
+    
+    return {
+      dados: { msg: "Loja atualizado com sucesso na tabela Loja" },
+      status: 200,
+    };
+  }
+
+  static async deletar(id) {
+    try {
+      await database.query("DELETE FROM loja WHERE id = ?", [id]);
+    } catch (error) {
+      console.log(error);
+      return {
+        dados: { msg: "MySql error", error: error.code },
+        status: 500,
+      };
+    }
+    return {
+      dados: { msg: "Loja deletada com sucesso da tabela Loja" },
+      status: 200,
+    };
+  }
 }
 
 export default lojaDAO;
