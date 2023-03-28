@@ -31,8 +31,13 @@ class ClientesDAO {
   }
   static async atualizar(email, obj) {
     try {
-      await database.query("UPDATE clientes SET idclientes = ?, nome = ?, email = ?, senha = ?, celular = ? WHERE email = ?", [
-        obj.idclientes,
+      if (!obj) {
+        return {
+          dados: { msg: "Objeto de atualização não fornecido" },
+          status: 400,
+        };
+      }     
+      await database.query("UPDATE clientes SET nome = ?, email = ?, senha = ?, celular = ? WHERE email = ?", [
         obj.nome,
         obj.email,
         obj.senha,
@@ -40,16 +45,36 @@ class ClientesDAO {
         email,
       ]);
     } catch (error) {
+      console.log(error);
+      return {
+        dados: { msg: "Erro ao atualizar o cliente", error: error.message },
+        status: 500,
+      };
+    }
+    
+    return {
+      dados: { msg: "Cliente atualizado com sucesso na tabela Clientes" },
+      status: 200,
+    };
+  }
+
+  static async deletar(email) {
+    try {
+      await database.query("DELETE FROM clientes WHERE email = ?", [email]);
+    } catch (error) {
+      console.log(error);
       return {
         dados: { msg: "MySql error", error: error.code },
         status: 500,
       };
     }
     return {
-      dados: { msg: "Cliente atualizado com sucesso na tabela Clientes" },
+      dados: { msg: "Cliente deletado com sucesso da tabela Clientes" },
       status: 200,
     };
   }
+  
+  
 }
 
 export default ClientesDAO;
